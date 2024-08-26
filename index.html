@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RISKY STORE</title>
+    <title>Rexiona Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -190,14 +190,14 @@
 <script>
     // Firebase configuration
     var firebaseConfig = {
-        apiKey: "AIzaSyCQ95xYGUTyhCq9ZzCNPeCGZcNpCasIGEA",
-        authDomain: "buyer1-a45e9.firebaseapp.com",
-        databaseURL: "https://buyer1-a45e9-default-rtdb.firebaseio.com",
-        projectId: "buyer1-a45e9",
-        storageBucket: "buyer1-a45e9.appspot.com",
-        messagingSenderId: "1020460260826",
-        appId: "1:1020460260826:web:b70a241b7094763f54f4e3",
-        measurementId: "G-6L7GMHTT4S"
+        apiKey: "AIzaSyAe7DiRe54EYdR4g5eflnBOxWFiGvAu34c",
+        authDomain: "risky-f2de4.firebaseapp.com",
+        databaseURL: "https://risky-f2de4-default-rtdb.firebaseio.com",
+        projectId: "risky-f2de4",
+        storageBucket: "risky-f2de4.appspot.com",
+        messagingSenderId: "70573427034",
+        appId: "1:70573427034:web:85ee8f762992016d310b63",
+        measurementId: "G-4L76NDRV8E"
     };
     firebase.initializeApp(firebaseConfig);
 
@@ -215,7 +215,7 @@
             const inputCode = document.getElementById('confirmationCode').value;
 
             // Fetch confirmation code from Firestore
-            const docRef = db.collection('settings').doc('confirmationCode');
+            const docRef = db.collection('buyer1').doc('confirmationCode');
             const doc = await docRef.get();
             if (!doc.exists || doc.data().code !== inputCode) {
                 alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
@@ -265,7 +265,7 @@
             const inputCode = prompt('Masukkan kode konfirmasi untuk menghapus produk:');
 
             
-            const docRef = db.collection('settings').doc('confirmationCode');
+            const docRef = db.collection('buyer1').doc('confirmationCode');
             const doc = await docRef.get();
             if (!doc.exists || doc.data().code !== inputCode) {
                 alert('Kode konfirmasi salah. Penghapusan dibatalkan.');
@@ -285,7 +285,7 @@
             const inputCode = document.getElementById('testimoniConfirmationCode').value;
 
             // Fetch confirmation code from Firestore
-            const docRef = db.collection('settings').doc('confirmationCode');
+            const docRef = db.collection('buyer1').doc('confirmationCode');
             const doc = await docRef.get();
             if (!doc.exists || doc.data().code !== inputCode) {
                 alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
@@ -328,4 +328,4 @@
 </script>
 
 </body>
-      </html>
+</html>
