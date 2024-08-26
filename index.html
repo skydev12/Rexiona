@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISKY STORE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Archivo Black", sans-serif;
+            background: #f4d03f;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .words-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .words {
+            color: #f4d03f;
+            font-size: 0;
+            line-height: 1.5;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .words span {
+            font-size: 5rem;
+            display: inline-block;
+            animation: move 3s ease-in-out infinite;
+        }
+
+        .word-2 span {
+            animation-delay: 0.2s;
+        }
+
+        .word-3 span {
+            animation-delay: 0.4s;
+        }
+
+        .word-4 span {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            50% {
+                text-shadow: 0 25px 50px rgba(0, 0, 0, 0.75);
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1 1 300px;
+            max-width: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .words span {
+                font-size: 3rem;
+            }
+            .card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .words span {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="words-container">
+    <!-- Animasi Teks -->
+    <div class="words word-1">
+        <span>R</span>
+        <span>E</span>
+        <span>X</span>
+        <span>I</span>
+        <span>O</span>
+        <span>N</span>
+        <span>A</span>
+    </div>
+
+    <div class="words word-2">
+        <span>S</span>
+        <span>T</span>
+        <span>O</span>
+        <span>R</span>
+        <span>E</span>
+    </div>
+
+    <div class="words word-3">
+        <span>B</span>
+        <span>E</span>
+        <span>S</span>
+        <span>T</span>
+    </div>
+
+    <div class="words word-4">
+        <span>D</span>
+        <span>E</span>
+        <span>V</span>
+        <span>E</span>
+        <span>L</span>
+        <span>O</span>
+        <span>P</span>
+        <span>E</span>
+        <span>R</span>
+    </div>
+</div>
+
+<div class="card-container">
+    <!-- Form Upload Produk -->
+        <h2 class="text-2xl font-bold mb-4 text-center">Upload Produk</h2>
+        <form id="uploadProductForm" class="space-y-4">
+            <input type="text" id="productTitle" placeholder="Judul Produk" class="w-full p-2 border rounded" required>
+            <textarea id="productDescription" placeholder="Deskripsi Produk" class="w-full p-2 border rounded" required></textarea>
+            <input type="number" id="productPrice" placeholder="Harga Produk" class="w-full p-2 border rounded" required>
+            <input type="file" id="productImage" accept="image/*" class="w-full p-2 border rounded" required>
+            <input type="text" id="confirmationCode" placeholder="Kode Konfirmasi" class="w-full p-2 border rounded" required>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Upload Produk</button>
+        </form>
+
+    <!-- Daftar Produk -->
+<section class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8">
+    <h2 class="text-2xl font-bold mb-4 text-center">Daftar Produk</h2>
+    <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Product items will be injected here dynamically -->
+    </div>
+</section>
+
+   <!-- Form Upload Testimoni -->
+<section class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8">
+    <h2 class="text-2xl font-bold mb-4 text-center">Upload Testimoni</h2>
+    <form id="uploadTestimoniForm" class="space-y-4">
+        <input type="file" id="testimoniImage" accept="image/*" class="w-full p-2 border rounded" required>
+        <input type="text" id="testimoniConfirmationCode" placeholder="Kode Konfirmasi" class="w-full p-2 border rounded" required>
+        <button type="submit" class="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600">Upload Testimoni</button>
+    </form>
+    <div id="testimoniList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <!-- Testimoni items will be injected here dynamically -->
+    </div>
+</section>
+
+
+<!-- Firebase Initialization -->
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+
+<script>
+    // Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyCQ95xYGUTyhCq9ZzCNPeCGZcNpCasIGEA",
+        authDomain: "buyer1-a45e9.firebaseapp.com",
+        databaseURL: "https://buyer1-a45e9-default-rtdb.firebaseio.com",
+        projectId: "buyer1-a45e9",
+        storageBucket: "buyer1-a45e9.appspot.com",
+        messagingSenderId: "1020460260826",
+        appId: "1:1020460260826:web:b70a241b7094763f54f4e3",
+        measurementId: "G-6L7GMHTT4S"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+      // Upload Produk
+      document.getElementById('uploadProductForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('productTitle').value;
+            const description = document.getElementById('productDescription').value;
+            const price = document.getElementById('productPrice').value;
+            const imageFile = document.getElementById('productImage').files[0];
+            const inputCode = document.getElementById('confirmationCode').value;
+
+            // Fetch confirmation code from Firestore
+            const docRef = db.collection('settings').doc('confirmationCode');
+            const doc = await docRef.get();
+            if (!doc.exists || doc.data().code !== inputCode) {
+                alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
+                return;
+            }
+
+            // Upload image to Firebase Storage
+            const storageRef = storage.ref('products/' + imageFile.name);
+            const snapshot = await storageRef.put(imageFile);
+            const imageUrl = await snapshot.ref.getDownloadURL();
+
+            // Save product info to Firestore
+            await db.collection('products').add({
+                title,
+                description,
+                price,
+                imageUrl
+            });
+
+            alert('Produk berhasil diupload!');
+            loadProducts();
+        });
+
+        // Load Produk
+        async function loadProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const productsSnapshot = await db.collection('products').get();
+            productsSnapshot.forEach(doc => {
+                const product = doc.data();
+                const productElement = `
+                    <div class="p-4 bg-gray-100 rounded shadow">
+                        <h3 class="text-xl font-bold">${product.title}</h3>
+                        <p>${product.description}</p>
+                        <p class="font-bold text-green-600">Rp ${product.price}</p>
+                        <img src="${product.imageUrl}" alt="${product.title}" class="w-full h-64 object-cover">
+                        <a href="https://wa.me/6283829749607?text=Saya ingin membeli barang ini: ${product.title}" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
+                        <button class="bg-red-500 text-white p-2 rounded mt-2 inline-block" onclick="deleteProduct('${doc.id}')">Hapus</button>
+                    </div>`;
+                productList.innerHTML += productElement;
+            });
+        }
+
+        // Hapus Produk
+        async function deleteProduct(productId) {
+            const inputCode = prompt('Masukkan kode konfirmasi untuk menghapus produk:');
+
+            
+            const docRef = db.collection('settings').doc('confirmationCode');
+            const doc = await docRef.get();
+            if (!doc.exists || doc.data().code !== inputCode) {
+                alert('Kode konfirmasi salah. Penghapusan dibatalkan.');
+                return;
+            }
+
+            await db.collection('products').doc(productId).delete();
+            alert('Produk berhasil dihapus!');
+            loadProducts();
+        }
+
+        // Upload Testimoni
+        document.getElementById('uploadTestimoniForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const imageFile = document.getElementById('testimoniImage').files[0];
+            const inputCode = document.getElementById('testimoniConfirmationCode').value;
+
+            // Fetch confirmation code from Firestore
+            const docRef = db.collection('settings').doc('confirmationCode');
+            const doc = await docRef.get();
+            if (!doc.exists || doc.data().code !== inputCode) {
+                alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
+                return;
+            }
+
+            // Upload testimoni image to Firebase Storage
+            const storageRef = storage.ref('testimoni/' + imageFile.name);
+            const snapshot = await storageRef.put(imageFile);
+            const imageUrl = await snapshot.ref.getDownloadURL();
+
+            // Save testimoni info to Firestore
+            await db.collection('testimoni').add({
+                imageUrl
+            });
+
+            alert('Testimoni berhasil diupload!');
+            loadTestimoni();
+        });
+
+        // Load Testimoni
+        async function loadTestimoni() {
+            const testimoniList = document.getElementById('testimoniList');
+            testimoniList.innerHTML = '';
+
+            const testimoniSnapshot = await db.collection('testimoni').get();
+            testimoniSnapshot.forEach(doc => {
+                const testimoni = doc.data();
+                const testimoniElement = `
+                    <div class="p-4 bg-gray-100 rounded shadow">
+                        <img src="${testimoni.imageUrl}" alt="Testimoni" class="w-full h-64 object-cover">
+                    </div>`;
+                testimoniList.innerHTML += testimoniElement;
+            });
+        }
+
+        // Load products and testimonials on page load
+        loadProducts();
+        loadTestimoni();
+</script>
+
+</body>
+      </html>
