@@ -203,128 +203,125 @@
 
     const db = firebase.firestore();
     const storage = firebase.storage();
+// Hardcoded confirmation code
+const hardcodedConfirmationCode = 'rexiona';
 
-      // Upload Produk
-      document.getElementById('uploadProductForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+// Upload Produk
+document.getElementById('uploadProductForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-            const title = document.getElementById('productTitle').value;
-            const description = document.getElementById('productDescription').value;
-            const price = document.getElementById('productPrice').value;
-            const imageFile = document.getElementById('productImage').files[0];
-            const inputCode = document.getElementById('confirmationCode').value;
+    const title = document.getElementById('productTitle').value;
+    const description = document.getElementById('productDescription').value;
+    const price = document.getElementById('productPrice').value;
+    const imageFile = document.getElementById('productImage').files[0];
+    const inputCode = document.getElementById('confirmationCode').value;
 
-            // Fetch confirmation code from Firestore
-            const docRef = db.collection('settings').doc('confirmationCode');
-            const doc = await docRef.get();
-            if (!doc.exists || doc.data().code !== inputCode) {
-                alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
-                return;
-            }
+    // Verify confirmation code
+    if (inputCode !== hardcodedConfirmationCode) {
+        alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
+        return;
+    }
 
-            // Upload image to Firebase Storage
-            const storageRef = storage.ref('products/' + imageFile.name);
-            const snapshot = await storageRef.put(imageFile);
-            const imageUrl = await snapshot.ref.getDownloadURL();
+    // Upload image to Firebase Storage
+    const storageRef = storage.ref('products/' + imageFile.name);
+    const snapshot = await storageRef.put(imageFile);
+    const imageUrl = await snapshot.ref.getDownloadURL();
 
-            // Save product info to Firestore
-            await db.collection('products').add({
-                title,
-                description,
-                price,
-                imageUrl
-            });
+    // Save product info to Firestore
+    await db.collection('products').add({
+        title,
+        description,
+        price,
+        imageUrl
+    });
 
-            alert('Produk berhasil diupload!');
-            loadProducts();
-        });
+    alert('Produk berhasil diupload!');
+    loadProducts();
+});
 
-        // Load Produk
-        async function loadProducts() {
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
+// Load Produk
+async function loadProducts() {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = '';
 
-            const productsSnapshot = await db.collection('products').get();
-            productsSnapshot.forEach(doc => {
-                const product = doc.data();
-                const productElement = `
-                    <div class="p-4 bg-gray-100 rounded shadow">
-                        <h3 class="text-xl font-bold">${product.title}</h3>
-                        <p>${product.description}</p>
-                        <p class="font-bold text-green-600">Rp ${product.price}</p>
-                        <img src="${product.imageUrl}" alt="${product.title}" class="w-full h-64 object-cover">
-                        <a href="https://wa.me/6283829749607?text=Saya ingin membeli barang ini: ${product.title}" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-                        <button class="bg-red-500 text-white p-2 rounded mt-2 inline-block" onclick="deleteProduct('${doc.id}')">Hapus</button>
-                    </div>`;
-                productList.innerHTML += productElement;
-            });
-        }
+    const productsSnapshot = await db.collection('products').get();
+    productsSnapshot.forEach(doc => {
+        const product = doc.data();
+        const productElement = `
+            <div class="p-4 bg-gray-100 rounded shadow">
+                <h3 class="text-xl font-bold">${product.title}</h3>
+                <p>${product.description}</p>
+                <p class="font-bold text-green-600">Rp ${product.price}</p>
+                <img src="${product.imageUrl}" alt="${product.title}" class="w-full h-64 object-cover">
+                <a href="https://wa.me/6283829749607?text=Saya ingin membeli barang ini: ${product.title}" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
+                <button class="bg-red-500 text-white p-2 rounded mt-2 inline-block" onclick="deleteProduct('${doc.id}')">Hapus</button>
+            </div>`;
+        productList.innerHTML += productElement;
+    });
+}
 
-        // Hapus Produk
-        async function deleteProduct(productId) {
-            const inputCode = prompt('Masukkan kode konfirmasi untuk menghapus produk:');
+// Hapus Produk
+async function deleteProduct(productId) {
+    const inputCode = prompt('Masukkan kode konfirmasi untuk menghapus produk:');
 
-            
-            const docRef = db.collection('settings').doc('confirmationCode');
-            const doc = await docRef.get();
-            if (!doc.exists || doc.data().code !== inputCode) {
-                alert('Kode konfirmasi salah. Penghapusan dibatalkan.');
-                return;
-            }
+    // Verify confirmation code
+    if (inputCode !== hardcodedConfirmationCode) {
+        alert('Kode konfirmasi salah. Penghapusan dibatalkan.');
+        return;
+    }
 
-            await db.collection('products').doc(productId).delete();
-            alert('Produk berhasil dihapus!');
-            loadProducts();
-        }
+    await db.collection('products').doc(productId).delete();
+    alert('Produk berhasil dihapus!');
+    loadProducts();
+}
 
-        // Upload Testimoni
-        document.getElementById('uploadTestimoniForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+// Upload Testimoni
+document.getElementById('uploadTestimoniForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-            const imageFile = document.getElementById('testimoniImage').files[0];
-            const inputCode = document.getElementById('testimoniConfirmationCode').value;
+    const imageFile = document.getElementById('testimoniImage').files[0];
+    const inputCode = document.getElementById('testimoniConfirmationCode').value;
 
-            // Fetch confirmation code from Firestore
-            const docRef = db.collection('settings').doc('confirmationCode');
-            const doc = await docRef.get();
-            if (!doc.exists || doc.data().code !== inputCode) {
-                alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
-                return;
-            }
+    // Verify confirmation code
+    if (inputCode !== hardcodedConfirmationCode) {
+        alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
+        return;
+    }
 
-            // Upload testimoni image to Firebase Storage
-            const storageRef = storage.ref('testimoni/' + imageFile.name);
-            const snapshot = await storageRef.put(imageFile);
-            const imageUrl = await snapshot.ref.getDownloadURL();
+    // Upload testimoni image to Firebase Storage
+    const storageRef = storage.ref('testimoni/' + imageFile.name);
+    const snapshot = await storageRef.put(imageFile);
+    const imageUrl = await snapshot.ref.getDownloadURL();
 
-            // Save testimoni info to Firestore
-            await db.collection('testimoni').add({
-                imageUrl
-            });
+    // Save testimoni info to Firestore
+    await db.collection('testimoni').add({
+        imageUrl
+    });
 
-            alert('Testimoni berhasil diupload!');
-            loadTestimoni();
-        });
+    alert('Testimoni berhasil diupload!');
+    loadTestimoni();
+});
 
-        // Load Testimoni
-        async function loadTestimoni() {
-            const testimoniList = document.getElementById('testimoniList');
-            testimoniList.innerHTML = '';
+// Load Testimoni
+async function loadTestimoni() {
+    const testimoniList = document.getElementById('testimoniList');
+    testimoniList.innerHTML = '';
 
-            const testimoniSnapshot = await db.collection('testimoni').get();
-            testimoniSnapshot.forEach(doc => {
-                const testimoni = doc.data();
-                const testimoniElement = `
-                    <div class="p-4 bg-gray-100 rounded shadow">
-                        <img src="${testimoni.imageUrl}" alt="Testimoni" class="w-full h-64 object-cover">
-                    </div>`;
-                testimoniList.innerHTML += testimoniElement;
-            });
-        }
+    const testimoniSnapshot = await db.collection('testimoni').get();
+    testimoniSnapshot.forEach(doc => {
+        const testimoni = doc.data();
+        const testimoniElement = `
+            <div class="p-4 bg-gray-100 rounded shadow">
+                <img src="${testimoni.imageUrl}" alt="Testimoni" class="w-full h-64 object-cover">
+            </div>`;
+        testimoniList.innerHTML += testimoniElement;
+    });
+}
 
-        // Load products and testimonials on page load
-        loadProducts();
-        loadTestimoni();
+// Load products and testimonials on page load
+loadProducts();
+loadTestimoni();
+
 </script>
 
 </body>
