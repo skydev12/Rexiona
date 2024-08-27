@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rexiona Store</title>
+    <title>RISKY STORE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -74,7 +74,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px; /* Reduced gap for smaller cards */
+            gap: 20px;
             width: 100%;
             max-width: 1200px;
             padding: 0 20px;
@@ -84,9 +84,9 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px; /* Reduced padding for smaller cards */
-            flex: 1 1 200px; /* Smaller cards */
-            max-width: 200px; /* Maximum width of smaller cards */
+            padding: 20px;
+            flex: 1 1 300px;
+            max-width: 500px;
         }
 
         @media (max-width: 768px) {
@@ -148,119 +148,184 @@
 </div>
 
 <div class="card-container">
-<!-- Daftar Produk -->
-<div class="card">
-    <h3 class="text-xl font-bold">join murbug</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 6.000</p>
-    <img src="murbug.jpg" alt="Produk 1" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli murbug" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+    <!-- Form Upload Produk -->
+        <h2 class="text-2xl font-bold mb-4 text-center">Upload Produk</h2>
+        <form id="uploadProductForm" class="space-y-4">
+            <input type="text" id="productTitle" placeholder="Judul Produk" class="w-full p-2 border rounded" required>
+            <textarea id="productDescription" placeholder="Deskripsi Produk" class="w-full p-2 border rounded" required></textarea>
+            <input type="number" id="productPrice" placeholder="Harga Produk" class="w-full p-2 border rounded" required>
+            <input type="file" id="productImage" accept="image/*" class="w-full p-2 border rounded" required>
+            <input type="text" id="confirmationCode" placeholder="Kode Konfirmasi" class="w-full p-2 border rounded" required>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Upload Produk</button>
+        </form>
 
-<div class="card">
-    <h3 class="text-xl font-bold">bug 1 nomor</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 1.000</p>
-    <img src="bug.jpg" alt="Produk 2" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli bug" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+    <!-- Daftar Produk -->
+<section class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8">
+    <h2 class="text-2xl font-bold mb-4 text-center">Daftar Produk</h2>
+    <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Product items will be injected here dynamically -->
+    </div>
+</section>
 
-<div class="card">
-    <h3 class="text-xl font-bold">apk qris tanpa ktp</h3>
-    <p>langsung tanya</p>
-    <p class="font-bold text-green-600">Rp 0.000</p>
-    <img src="qris.jpg" alt="Produk 3" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli apk qris" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+   <!-- Form Upload Testimoni -->
+<section class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8">
+    <h2 class="text-2xl font-bold mb-4 text-center">Upload Testimoni</h2>
+    <form id="uploadTestimoniForm" class="space-y-4">
+        <input type="file" id="testimoniImage" accept="image/*" class="w-full p-2 border rounded" required>
+        <input type="text" id="testimoniConfirmationCode" placeholder="Kode Konfirmasi" class="w-full p-2 border rounded" required>
+        <button type="submit" class="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600">Upload Testimoni</button>
+    </form>
+    <div id="testimoniList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <!-- Testimoni items will be injected here dynamically -->
+    </div>
+</section>
 
-<div class="card">
-    <h3 class="text-xl font-bold">owner bug</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 15.000</p>
-    <img src="owner.jpg" alt="Produk 4" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli owner bug" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
 
-<div class="card">
-    <h3 class="text-xl font-bold">WA gb</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 1.000</p>
-    <img src="wa-gb.jpg" alt="Produk 5" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli WA gb" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+<!-- Firebase Initialization -->
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
 
-<div class="card">
-    <h3 class="text-xl font-bold">Sc bot buat panel</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 2.000</p>
-    <img src="sc-bot.jpg" alt="Produk 6" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Sc bot buat panel" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+<script>
+    // Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAe7DiRe54EYdR4g5eflnBOxWFiGvAu34c",
+        authDomain: "risky-f2de4.firebaseapp.com",
+        databaseURL: "https://risky-f2de4-default-rtdb.firebaseio.com",
+        projectId: "risky-f2de4",
+        storageBucket: "risky-f2de4.appspot.com",
+        messagingSenderId: "70573427034",
+        appId: "1:70573427034:web:85ee8f762992016d310b63",
+        measurementId: "G-4L76NDRV8E"
+    };
+    firebase.initializeApp(firebaseConfig);
 
-<div class="card">
-    <h3 class="text-xl font-bold">Sc rhxl v7</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 5.000</p>
-    <img src="sc-rhxl-v7.jpg" alt="Produk 7" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Sc rhxl v7" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-<div class="card">
-    <h3 class="text-xl font-bold">Sc rhxl v8</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 8.000</p>
-    <img src="sc-rhxl-v8.jpg" alt="Produk 8" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Sc rhxl v8" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+      // Upload Produk
+      document.getElementById('uploadProductForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-<div class="card">
-    <h3 class="text-xl font-bold">Sc Hanmond</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 4.000</p>
-    <img src="sc-hanmond.jpg" alt="Produk 9" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Sc Hanmond" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+            const title = document.getElementById('productTitle').value;
+            const description = document.getElementById('productDescription').value;
+            const price = document.getElementById('productPrice').value;
+            const imageFile = document.getElementById('productImage').files[0];
+            const inputCode = document.getElementById('confirmationCode').value;
 
-<div class="card">
-    <h3 class="text-xl font-bold">Mo beli panel bisa</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 5.000</p>
-    <img src="mo-beli-panel.jpg" alt="Produk 10" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Mo beli panel" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+            // Fetch confirmation code from Firestore
+            const docRef = db.collection('buyer1').doc('confirmationCode');
+            const doc = await docRef.get();
+            if (!doc.exists || doc.data().code !== inputCode) {
+                alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
+                return;
+            }
 
-<div class="card">
-    <h3 class="text-xl font-bold">Panel ram 10 gb</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 5.000</p>
-    <img src="panel-ram-10gb.jpg" alt="Produk 11" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Panel ram 10 gb" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+            // Upload image to Firebase Storage
+            const storageRef = storage.ref('buyerproduct/' + imageFile.name);
+            const snapshot = await storageRef.put(imageFile);
+            const imageUrl = await snapshot.ref.getDownloadURL();
 
-<div class="card">
-    <h3 class="text-xl font-bold">Panel unil</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 10.000</p>
-    <img src="panel-unil.jpg" alt="Produk 12" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Panel unil" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+            // Save product info to Firestore
+            await db.collection('buyerproduct').add({
+                title,
+                description,
+                price,
+                imageUrl
+            });
 
-<div class="card">
-    <h3 class="text-xl font-bold">Panel ram 10 gb + SC Hanmond</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 8.000</p>
-    <img src="panel-ram-10gb-sc-hanmond.jpg" alt="Produk 13" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Panel ram 10 gb + SC Hanmond" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+            alert('Produk berhasil diupload!');
+            loadbuyerproduct();
+        });
 
-<div class="card">
-    <h3 class="text-xl font-bold">Panel unil + SC thx v8 + SC Hanmond</h3>
-    <p>barang ready</p>
-    <p class="font-bold text-green-600">Rp 20.000</p>
-    <img src="panel-unil-sc-thx-v8.jpg" alt="Produk 14" class="w-full h-32 object-cover">
-    <a href="https://wa.me/6285215501691?text=Saya ingin membeli Panel unil + SC thx v8 + SC Hanmond" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
-</div>
+        // Load Produk
+        async function loadbuyerproduct() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
 
+            const buyerproductSnapshot = await db.collection('buyerproduct').get();
+            buyerproductSnapshot.forEach(doc => {
+                const product = doc.data();
+                const productElement = `
+                    <div class="p-4 bg-gray-100 rounded shadow">
+                        <h3 class="text-xl font-bold">${product.title}</h3>
+                        <p>${product.description}</p>
+                        <p class="font-bold text-green-600">Rp ${product.price}</p>
+                        <img src="${product.imageUrl}" alt="${product.title}" class="w-full h-64 object-cover">
+                        <a href="https://wa.me/6283829749607?text=Saya ingin membeli barang ini: ${product.title}" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block">Pesan Sekarang</a>
+                        <button class="bg-red-500 text-white p-2 rounded mt-2 inline-block" onclick="deleteProduct('${doc.id}')">Hapus</button>
+                    </div>`;
+                productList.innerHTML += productElement;
+            });
+        }
+
+        // Hapus Produk
+        async function deleteProduct(productId) {
+            const inputCode = prompt('Masukkan kode konfirmasi untuk menghapus produk:');
+
+            
+            const docRef = db.collection('buyer1').doc('confirmationCode');
+            const doc = await docRef.get();
+            if (!doc.exists || doc.data().code !== inputCode) {
+                alert('Kode konfirmasi salah. Penghapusan dibatalkan.');
+                return;
+            }
+
+            await db.collection('buyerproduct').doc(productId).delete();
+            alert('Produk berhasil dihapus!');
+            loadbuyerproduct();
+        }
+
+        // Upload Testimoni
+        document.getElementById('uploadTestimoniForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const imageFile = document.getElementById('testimoniImage').files[0];
+            const inputCode = document.getElementById('testimoniConfirmationCode').value;
+
+            // Fetch confirmation code from Firestore
+            const docRef = db.collection('buyer1').doc('confirmationCode');
+            const doc = await docRef.get();
+            if (!doc.exists || doc.data().code !== inputCode) {
+                alert('Kode konfirmasi salah. Penyimpanan dibatalkan.');
+                return;
+            }
+
+            // Upload testimoni image to Firebase Storage
+            const storageRef = storage.ref('testimoni/' + imageFile.name);
+            const snapshot = await storageRef.put(imageFile);
+            const imageUrl = await snapshot.ref.getDownloadURL();
+
+            // Save testimoni info to Firestore
+            await db.collection('testimoni').add({
+                imageUrl
+            });
+
+            alert('Testimoni berhasil diupload!');
+            loadTestimoni();
+        });
+
+        // Load Testimoni
+        async function loadTestimoni() {
+            const testimoniList = document.getElementById('testimoniList');
+            testimoniList.innerHTML = '';
+
+            const testimoniSnapshot = await db.collection('testimoni').get();
+            testimoniSnapshot.forEach(doc => {
+                const testimoni = doc.data();
+                const testimoniElement = `
+                    <div class="p-4 bg-gray-100 rounded shadow">
+                        <img src="${testimoni.imageUrl}" alt="Testimoni" class="w-full h-64 object-cover">
+                    </div>`;
+                testimoniList.innerHTML += testimoniElement;
+            });
+        }
+
+        // Load buyerproduct and testimonials on page load
+        loadbuyerproduct();
+        loadTestimoni();
+</script>
 
 </body>
 </html>
